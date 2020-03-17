@@ -36,7 +36,7 @@ class CLI
       number_of_verses = verses.count
       
       verses.each_with_index do |verse, index|
-        puts "#{index + 1} - #{verse.text}"
+        puts "#{index + 1} - #{verse.get_text}"
       end
       
       puts "q - quit"
