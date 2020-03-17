@@ -26,9 +26,13 @@ class Scraper
       page = Nokogiri::HTML(open("https://www.biblestudytools.com/topical-verses/inspirational-bible-verses/"))
       
       
+<<<<<<< HEAD
       result = Passage.new_from_scrape(page.css(".scripture")[verse_number.to_i - 1].text)
       
       return result
+=======
+      return Passage.new_from_scrape(page.css(".scripture ")[verse_number.to_i - 1])
+>>>>>>> 0b3da14c1ee8860845a43a8ae7953d79894dcf9b
       
     end
   
