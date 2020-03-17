@@ -1,11 +1,12 @@
 class Passage
   
   
+  
   def initialize(text)
     @text =  text
   end
 
-  def self.new_from_page(page)
+  def self.new_from_scrape(page)
 
     self.new(page)
 

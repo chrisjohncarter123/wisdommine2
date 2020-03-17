@@ -1,6 +1,7 @@
 require 'pry'
 require 'nokogiri'
 require 'open-uri'
+require './passage'
 
 #ask for verse
 #example input: 1 .. 27
@@ -19,17 +20,15 @@ class Scraper
 
     end
     
-    def self.get_passage#(verse_number)
+    def self.get_passage(verse_number)
+      
       
       page = Nokogiri::HTML(open("https://www.biblestudytools.com/topical-verses/inspirational-bible-verses/"))
       
-      binding.pry
       
-      #return page.css(".scripture")
+      return Passage.new_from_scrape(page.css(".scripture ")[verse_number.to_i - 1])
       
     end
   
 end
-
-Scraper.get_passage
 

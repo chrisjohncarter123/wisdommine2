@@ -1,4 +1,5 @@
 require './scraper'
+require './passage'
 
 
 class CLI
@@ -39,24 +40,39 @@ class CLI
       puts "---Main Menu---"
       
       verses = Scraper.get_verses
+      number_of_verses = verses.count
       
       verses.each_with_index do |verse, index|
         puts "#{index + 1} - #{verse.text}"
       end
+      
+      puts "q - quit"
     
       puts "Please select a menu option:"
       
       input = gets.chomp!
-      while(bible_books.include?(input) == false)
-        puts "Input is invalid. Please enter a name of a bible book."
-        input = gets.chomp!
-      end 
       
-      puts "Please enter a chapter of your bible book"
+      if(input == 'q')
+        puts "Goodbye!"
+        break
+      end
+
+      while (is_integer(input) == false  || input.to_i <= 0 || input.to_i > number_of_verses)
+        puts "Please enter an integer value between 1 and #{number_of_verses}."
+        input = gets.chomp!
+      end
+      
+      passage = Scraper.get_passage(input)
+      
+      puts passage.get_text
 
     end
   end
   
+  
+  def is_integer(input)
+    input.to_i.to_s == input
+  end
   
 end
 
