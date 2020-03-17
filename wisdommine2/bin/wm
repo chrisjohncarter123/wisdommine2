@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require './lib/wisdommine2/cli.rb'
+
+puts "hi"
+
+CLI.new.run
+
