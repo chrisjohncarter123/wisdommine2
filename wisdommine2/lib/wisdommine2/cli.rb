@@ -50,7 +50,7 @@ class CLI
     
       puts "Please select a menu option:"
       
-      input = gets.chomp!
+      input = get_input
       
       if(input == 'q')
         puts "Goodbye!"
@@ -59,16 +59,26 @@ class CLI
 
       while (is_integer(input) == false  || input.to_i <= 0 || input.to_i > number_of_verses)
         puts "Please enter an integer value between 1 and #{number_of_verses}."
-        input = gets.chomp!
+        input = get_input
       end
       
       passage = Scraper.get_passage(input)
       
       puts passage.get_text
+      
+      puts "(press enter to continue)"
+      
+      input = get_input
+      
+      
 
     end
   end
   
+  
+  def get_input
+    gets.chomp
+  end
   
   def is_integer(input)
     input.to_i.to_s == input
