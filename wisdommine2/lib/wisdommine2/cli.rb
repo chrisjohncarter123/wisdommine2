@@ -1,3 +1,4 @@
+require './scraper'
 
 
 class CLI
@@ -31,11 +32,20 @@ class CLI
     puts "Welcome to " + "Wisdom Mine!"
     
     
-    bible_books = ['john', 'james']
+    running = true
     
-    puts "---Main Menu---"
-    while @running = true
-      puts "Please enter the title of a book in the bible:"
+    while running == true
+    
+      puts "---Main Menu---"
+      
+      verses = Scraper.get_verses
+      
+      verses.each_with_index do |verse, index|
+        puts "#{index + 1} - #{verse.text}"
+      end
+    
+      puts "Please select a menu option:"
+      
       input = gets.chomp!
       while(bible_books.include?(input) == false)
         puts "Input is invalid. Please enter a name of a bible book."
@@ -49,3 +59,7 @@ class CLI
   
   
 end
+
+
+CLI.new.run
+
