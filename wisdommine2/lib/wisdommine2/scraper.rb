@@ -1,7 +1,7 @@
 require 'pry'
 require 'nokogiri'
 require 'open-uri'
-require './passage'
+require_relative './passage.rb'
 
 #ask for verse
 #example input: 1 .. 27
@@ -26,9 +26,13 @@ class Scraper
       page = Nokogiri::HTML(open("https://www.biblestudytools.com/topical-verses/inspirational-bible-verses/"))
       
       
+
       result = Passage.new_from_scrape(page.css(".scripture")[verse_number.to_i - 1].text)
       
       return result
+
+      #return Passage.new_from_scrape(page.css(".scripture ")[verse_number.to_i - 1])
+
       
     end
   

@@ -1,18 +1,11 @@
-require './scraper'
-require './passage'
-
+require_relative './scraper.rb'
+require_relative './passage.rb'
+require 'pry'
 
 class CLI
-  
-  
-  def initialize
-    
-  end
-  
-  
 
   def run
-     puts"                                                        "
+    puts"                                                        "
     puts"  ░██╗░░░░░░░██╗██╗░██████╗██████╗░░█████╗░███╗░░░███╗"
     puts"  ░██║░░██╗░░██║██║██╔════╝██╔══██╗██╔══██╗████╗░████║"
     puts"  ░╚██╗████╗██╔╝██║╚█████╗░██║░░██║██║░░██║██╔████╔██║"
@@ -50,15 +43,18 @@ class CLI
     
       puts "Please select a menu option:"
       
+  
       input = get_input
+  
       
       if(input == 'q')
         puts "Goodbye!"
         break
       end
-
+  
       while (is_integer(input) == false  || input.to_i <= 0 || input.to_i > number_of_verses)
         puts "Please enter an integer value between 1 and #{number_of_verses}."
+  
         input = get_input
       end
       
@@ -69,23 +65,20 @@ class CLI
       puts "(press enter to continue)"
       
       input = get_input
-      
-      
 
     end
   end
-  
-  
+
   def get_input
     gets.chomp
   end
   
+
   def is_integer(input)
     input.to_i.to_s == input
   end
   
 end
 
-
-CLI.new.run
+#CLI.new.run
 

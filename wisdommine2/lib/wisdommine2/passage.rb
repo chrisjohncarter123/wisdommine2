@@ -1,5 +1,6 @@
 class Passage
   
+  
 
   def initialize(text)
     @text =  text
