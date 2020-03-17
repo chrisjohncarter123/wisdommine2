@@ -1,21 +1,16 @@
 class Passage
   
-  
+  attr_accessor :title, :content
 
-  def initialize(text)
-    @text =  text
+  @@all = []
+
+  def initialize(title)
+    @title = title
+    @@all << self
   end
 
-  def self.new_from_scrape(page)
-
-    self.new(page)
-
-  end
-
-
-  def get_text
-
-    return @text
+  def self.all
+    @@all
 
   end
 

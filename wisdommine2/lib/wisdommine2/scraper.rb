@@ -3,44 +3,29 @@ require 'nokogiri'
 require 'open-uri'
 require_relative './passage.rb'
 
-#ask for verse
-#example input: 1 .. 27
-
-#show passage
-
-#class passage: verse (title), content
-
-
 class Scraper
-  
-    def self.get_verses
 
-      verses = Nokogiri::HTML(open("https://www.biblestudytools.com/topical-verses/inspirational-bible-verses/")).css(".list-group-item-heading")
+    #create all the passage objects and give them each a title
+    def self.create_passages
 
-      passages = []
+      passages = Nokogiri::HTML(open("https://www.biblestudytools.com/topical-verses/inspirational-bible-verses/")).css(".list-group-item-heading")
 
-      verses.each_with_index do |verse, index|
-        passages << Passage.new_from_scrape(verse.text)
+      passages.each do |passage|
+        Passage.new(passage.text)
       end
 
-      return passages
-
-    end
-    
-    def self.get_passage(verse_number)
-      
-      page = Nokogiri::HTML(open("https://www.biblestudytools.com/topical-verses/inspirational-bible-verses/"))
-
-      result = Passage.new_from_scrape(page.css(".scripture")[verse_number.to_i - 1].text)
-      
-      return result
-
-      #return Passage.new_from_scrape(page.css(".scripture ")[verse_number.to_i - 1])
-
-      
     end
 
+    #set the content of each passage
+    def self.get_content
+      
+      contents = Nokogiri::HTML(open("https://www.biblestudytools.com/topical-verses/inspirational-bible-verses/")).css(".scripture")
 
-  
+      Passage.all.each_with_index do |passage, index|
+        #.gsub(/\s+/, " ") removes extra white space
+        passage.content = contents[index].text.gsub(/\s+/, " ")
+      end
+    end
+
 end
 
