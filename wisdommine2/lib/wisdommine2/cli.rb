@@ -4,71 +4,96 @@ require 'pry'
 
 class CLI
 
-  def run
-    puts reverse(red("                                                      "))
-    puts reverse(red("  ░██╗░░░░░░░██╗██╗░██████╗██████╗░░█████╗░███╗░░░███╗"))
-    puts reverse(red("  ░██║░░██╗░░██║██║██╔════╝██╔══██╗██╔══██╗████╗░████║"))
-    puts reverse(red("  ░╚██╗████╗██╔╝██║╚█████╗░██║░░██║██║░░██║██╔████╔██║"))
-    puts reverse(red("  ░░████╔═████║░██║░╚═══██╗██║░░██║██║░░██║██║╚██╔╝██║"))
-    puts reverse(red("  ░░╚██╔╝░╚██╔╝░██║██████╔╝██████╔╝╚█████╔╝██║░╚═╝░██║"))
-    puts reverse(red("  ░░░╚═╝░░░╚═╝░░╚═╝╚═════╝░╚═════╝░░╚════╝░╚═╝░░░░░╚═╝"))
-    puts reverse(red("                                                      "))
-
-    puts reverse(light_blue("                                                      "))
-    puts reverse(light_blue("             ███╗░░░███╗██╗███╗░░██╗███████╗          "))
-    puts reverse(light_blue("             ████╗░████║██║████╗░██║██╔════╝          "))
-    puts reverse(light_blue("             ██╔████╔██║██║██╔██╗██║█████╗░░          "))
-    puts reverse(light_blue("             ██║╚██╔╝██║██║██║╚████║██╔══╝░░          "))
-    puts reverse(light_blue("             ██║░╚═╝░██║██║██║░╚███║███████╗          "))
-    puts reverse(light_blue("             ╚═╝░░░░░╚═╝╚═╝╚═╝░░╚══╝╚══════╝          "))
-    puts reverse(light_blue("                                                      "))
-
-
-
-
-
-    puts blue("Welcome to " + "Wisdom Mine!")
+  def start
+    display_intro
 
     Scraper.create_passages
     Scraper.get_content
-    passages = Passage.all
-    number_of_passages = passages.count
 
-    while true
-    
-      puts underline(blue("   Main Menu   "))
-      
-      passages.each_with_index do |verse, index|
-        puts bold(green("#{index + 1} - #{verse.title}"))
-      end
-      
-      puts red(bold("q - quit"))
-    
-      puts blue(bold("Please select a menu option:"))
-
-      input = get_input
-
-      if(input == 'q')
-        puts blue("Goodbye!")
-        break
-      end
-  
-      while (is_integer(input) == false  || input.to_i <= 0 || input.to_i > number_of_passages)
-        puts red("Please enter an integer value between 1 and #{number_of_passages}.")
-  
-        input = get_input
-      end
-
-      puts ""
-      puts Passage.all[input.to_i - 1].title
-      puts Passage.all[input.to_i - 1].content
-      puts ""
-      puts green("(press enter to continue)")
-      
-      get_input
-
-    end
+    loop
   end
+
+  def display_intro
+
+    puts "                                                      "
+    puts "  ░██╗░░░░░░░██╗██╗░██████╗██████╗░░█████╗░███╗░░░███╗"
+    puts "  ░██║░░██╗░░██║██║██╔════╝██╔══██╗██╔══██╗████╗░████║"
+    puts "  ░╚██╗████╗██╔╝██║╚█████╗░██║░░██║██║░░██║██╔████╔██║"
+    puts "  ░░████╔═████║░██║░╚═══██╗██║░░██║██║░░██║██║╚██╔╝██║"
+    puts "  ░░╚██╔╝░╚██╔╝░██║██████╔╝██████╔╝╚█████╔╝██║░╚═╝░██║"
+    puts "  ░░░╚═╝░░░╚═╝░░╚═╝╚═════╝░╚═════╝░░╚════╝░╚═╝░░░░░╚═╝"
+    puts "                                                      "
+
+    puts "                                                      "
+    puts "             ███╗░░░███╗██╗███╗░░██╗███████╗          "
+    puts "             ████╗░████║██║████╗░██║██╔════╝          "
+    puts "             ██╔████╔██║██║██╔██╗██║█████╗░░          "
+    puts "             ██║╚██╔╝██║██║██║╚████║██╔══╝░░          "
+    puts "             ██║░╚═╝░██║██║██║░╚███║███████╗          "
+    puts "             ╚═╝░░░░░╚═╝╚═╝╚═╝░░╚══╝╚══════╝          "
+    puts "                                                      "
+
+    puts "Welcome to " + "Wisdom Mine!"
+
+  end
+
+  def loop
+
+    puts "----Main Menu----"
+    puts "Please select a menu option:"
+
+    display_menu_options
+
+    input = get_passage_input
+
+    display_passage(input)
+
+    puts "To exit the program, enter exit"
+    puts "To run Wisdom Mine again, enter run"
+
+    input = get_input.downcase
+    if(input == "exit")
+      puts "Thank you for using Wisdom Mine!"
+    elsif (input == "run")
+      loop
+    else
+      puts "Input not valid."
+      loop
+    end
+
+
+  end
+
+  def display_menu_options
+
+    # puts each verse
+    Passage.all.each_with_index do |verse, index|
+      puts "#{index + 1} - #{verse.title}"
+    end
+
+  end
+
+  def get_passage_input
+
+    input = get_input
+    if (is_integer(input) == false  || input.to_i <= 0 || input.to_i > Passage.all.count)
+      puts "Please enter an integer value between 1 and #{Passage.all.count}."
+
+      return get_passage_input
+    end
+    return input
+  end
+
+  def display_passage(input)
+    puts ""
+    puts Passage.all[input.to_i - 1].title
+    puts Passage.all[input.to_i - 1].content
+    puts ""
+    puts "(press enter to continue)"
+    gets
+
+  end
+
 
   def get_input
     gets.chomp
@@ -78,51 +103,6 @@ class CLI
     input.to_i.to_s == input
   end
 
-
-
-  def colorize(string, color_code)
-    "\e[#{color_code}m#{string}\e[0m"
-  end
-
-  def bold(string)
-    "\e[1m#{string}\e[22m"
-
-  end
-
-  def underline(string)
-    "\e[4m#{string}\e[24m"
-
-  end
-
-  def reverse(string)
-    "\e[7m#{string}\e[27m"
-
-  end
-
-  def red(string)
-    colorize(string,31)
-  end
-
-
-  def green(string)
-    colorize(string,32)
-  end
-
-  def yellow(string)
-    colorize(string,33)
-  end
-
-  def blue(string)
-    colorize(string,34)
-  end
-
-  def pink(string)
-    colorize(string,35)
-  end
-
-  def light_blue(string)
-    colorize(string,36)
-  end
   
 end
 

@@ -2,4 +2,4 @@
 
 require_relative '../lib/wisdommine2/cli.rb'
 
-CLI.new.run
+CLI.new.start
