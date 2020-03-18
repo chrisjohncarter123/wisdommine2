@@ -5,22 +5,26 @@ require 'pry'
 class CLI
 
   def run
-    puts"                                                        "
-    puts red("  ░██╗░░░░░░░██╗██╗░██████╗██████╗░░█████╗░███╗░░░███╗")
-    puts red("  ░██║░░██╗░░██║██║██╔════╝██╔══██╗██╔══██╗████╗░████║")
-    puts red("  ░╚██╗████╗██╔╝██║╚█████╗░██║░░██║██║░░██║██╔████╔██║")
-    puts red("  ░░████╔═████║░██║░╚═══██╗██║░░██║██║░░██║██║╚██╔╝██║")
-    puts red("  ░░╚██╔╝░╚██╔╝░██║██████╔╝██████╔╝╚█████╔╝██║░╚═╝░██║")
-    puts red("  ░░░╚═╝░░░╚═╝░░╚═╝╚═════╝░╚═════╝░░╚════╝░╚═╝░░░░░╚═╝")
-    puts"                                                      "
+    puts reverse(red("                                                      "))
+    puts reverse(red("  ░██╗░░░░░░░██╗██╗░██████╗██████╗░░█████╗░███╗░░░███╗"))
+    puts reverse(red("  ░██║░░██╗░░██║██║██╔════╝██╔══██╗██╔══██╗████╗░████║"))
+    puts reverse(red("  ░╚██╗████╗██╔╝██║╚█████╗░██║░░██║██║░░██║██╔████╔██║"))
+    puts reverse(red("  ░░████╔═████║░██║░╚═══██╗██║░░██║██║░░██║██║╚██╔╝██║"))
+    puts reverse(red("  ░░╚██╔╝░╚██╔╝░██║██████╔╝██████╔╝╚█████╔╝██║░╚═╝░██║"))
+    puts reverse(red("  ░░░╚═╝░░░╚═╝░░╚═╝╚═════╝░╚═════╝░░╚════╝░╚═╝░░░░░╚═╝"))
+    puts reverse(red("                                                      "))
 
-    puts light_blue("             ███╗░░░███╗██╗███╗░░██╗███████╗          ")
-    puts light_blue("             ████╗░████║██║████╗░██║██╔════╝          ")
-    puts light_blue("             ██╔████╔██║██║██╔██╗██║█████╗░░          ")
-    puts light_blue("             ██║╚██╔╝██║██║██║╚████║██╔══╝░░          ")
-    puts light_blue("             ██║░╚═╝░██║██║██║░╚███║███████╗          ")
-    puts light_blue("             ╚═╝░░░░░╚═╝╚═╝╚═╝░░╚══╝╚══════╝          ")
-    puts light_blue("                                                      ")
+    puts reverse(light_blue("                                                      "))
+    puts reverse(light_blue("             ███╗░░░███╗██╗███╗░░██╗███████╗          "))
+    puts reverse(light_blue("             ████╗░████║██║████╗░██║██╔════╝          "))
+    puts reverse(light_blue("             ██╔████╔██║██║██╔██╗██║█████╗░░          "))
+    puts reverse(light_blue("             ██║╚██╔╝██║██║██║╚████║██╔══╝░░          "))
+    puts reverse(light_blue("             ██║░╚═╝░██║██║██║░╚███║███████╗          "))
+    puts reverse(light_blue("             ╚═╝░░░░░╚═╝╚═╝╚═╝░░╚══╝╚══════╝          "))
+    puts reverse(light_blue("                                                      "))
+
+
+
 
 
     puts blue("Welcome to " + "Wisdom Mine!")
@@ -32,15 +36,15 @@ class CLI
 
     while true
     
-      puts blue("---Main Menu---")
+      puts underline(blue("   Main Menu   "))
       
       passages.each_with_index do |verse, index|
-        puts green("#{index + 1} - #{verse.title}")
+        puts bold(green("#{index + 1} - #{verse.title}"))
       end
       
-      puts red("q - quit")
+      puts red(bold("q - quit"))
     
-      puts "Please select a menu option:"
+      puts blue(bold("Please select a menu option:"))
 
       input = get_input
 
@@ -80,9 +84,25 @@ class CLI
     "\e[#{color_code}m#{string}\e[0m"
   end
 
+  def bold(string)
+    "\e[1m#{string}\e[22m"
+
+  end
+
+  def underline(string)
+    "\e[4m#{string}\e[24m"
+
+  end
+
+  def reverse(string)
+    "\e[7m#{string}\e[27m"
+
+  end
+
   def red(string)
     colorize(string,31)
   end
+
 
   def green(string)
     colorize(string,32)
