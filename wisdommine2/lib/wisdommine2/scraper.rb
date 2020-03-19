@@ -1,14 +1,23 @@
 require 'pry'
+
 require 'nokogiri'
 require 'open-uri'
+
 require_relative './passage.rb'
 
 class Scraper
 
-    #create all the passage objects and give them each a title
-    def self.create_passages
+  def self.scrape_all
+    create_passages
+    get_content
+  end
 
-      passages = Nokogiri::HTML(open("https://www.biblestudytools.com/topical-verses/inspirational-bible-verses/")).css(".list-group-item-heading")
+    #create all the passage objects and give them each a title
+  def self.create_passages
+
+
+      passages = Nokogiri::HTML(open("https://www.biblestudytools.com/topical-verses/inspirational-bible-verses/"))
+                     .css(".list-group-item-heading")
 
       passages.each do |passage|
         Passage.new(passage.text)

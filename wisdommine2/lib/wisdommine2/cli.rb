@@ -7,8 +7,7 @@ class CLI
   def start
     display_intro
 
-    Scraper.create_passages
-    Scraper.get_content
+    Scraper.scrape_all
 
     loop
   end
@@ -57,7 +56,7 @@ class CLI
     elsif (input == "run")
       loop
     else
-      puts "Input not valid."
+      puts "Input not valid. Running wisdom mine again."
       loop
     end
 
@@ -93,7 +92,6 @@ class CLI
     gets
 
   end
-
 
   def get_input
     gets.chomp
